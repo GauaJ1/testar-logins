@@ -32,9 +32,3 @@ Este script JavaScript foi criado para ser executado no console do Chrome e real
 
 5. **Monitore os resultados:**
    - Acompanhe o console para ver os resultados das tentativas e identificar combinações válidas.
-
----
-
-## 🧪 Exemplo de Código
-
-> *Adicione seu código aqui ou forneça um exemplo mínimo adaptável.*
