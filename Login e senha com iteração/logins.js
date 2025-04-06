@@ -27,10 +27,10 @@ async function tentarLogin(usuario, senha) {
     // Verifica se o login foi bem-sucedido (ADAPTAR A LÓGICA!).
     const painelUsuario = document.querySelector('#painel_usuario');
     if (painelUsuario) {
-        console.log(`Sucesso: ${usuario}/${senha}`); // Login bem-sucedido!
+        console.log(`%cSucesso: ${usuario}/${senha}`, 'color: green;'); // Login bem-sucedido!
         return true;
     } else {
-        console.log(`Falha: ${usuario}/${senha}`); // Login falhou!
+        console.error(`%cFalha: ${usuario}/${senha}`, 'color: red;'); // Login falhou!
         return false;
     }
 }
@@ -45,13 +45,12 @@ async function executarTestes() {
 
         if (await tentarLogin(usuario, senha)) return; // Para ao encontrar um login válido.
     }
-    console.log('Falha: Nenhuma combinação funcionou.');
+    console.error('%cFalha: Nenhuma combinação funcionou.', 'color: red;');
 }
 
 executarTestes();
 
-/*
-**Adaptando para outro site:**
+/* **Adaptando para outro site:**
 1. Inspecione o HTML do login.
 2. Adapte os seletores CSS em `tentarLogin()`.
 3. Adapte a lógica de sucesso em `tentarLogin()`.
