@@ -22,7 +22,7 @@ async function tentarLogin(usuario, senha) {
     senhaInput.value = senha;
     form.submit();
 
-    await new Promise(resolve => setTimeout(resolve, 2000)); // Aguarda (AJUSTAR O TEMPO).
+    await new Promise(resolve => setTimeout(resolve, 2500)); // Aguarda (AJUSTAR O TEMPO).
 
     // Verifica se o login foi bem-sucedido (ADAPTAR A LÓGICA!).
     const painelUsuario = document.querySelector('#painel_usuario');
@@ -30,6 +30,7 @@ async function tentarLogin(usuario, senha) {
         console.log(`Sucesso: ${usuario}/${senha}`); // Login bem-sucedido!
         return true;
     } else {
+        console.log(`Falha: ${usuario}/${senha}`); // Login falhou!
         return false;
     }
 }
@@ -39,6 +40,9 @@ async function executarTestes() {
     for (let i = 0; i < usuarios.length; i++) {
         const usuario = usuarios[i];
         const senha = senhas[i];
+
+        console.log(`Testando: ${usuario}/${senha}`);
+
         if (await tentarLogin(usuario, senha)) return; // Para ao encontrar um login válido.
     }
     console.log('Falha: Nenhuma combinação funcionou.');
