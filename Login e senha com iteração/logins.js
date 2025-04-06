@@ -21,6 +21,9 @@ function stop() {
 // Exponha a função stop no escopo global (window) para que possa ser chamada no console.
 window.stop = stop;
 
+// Variável para verificar se o login foi bem-sucedido
+let loginSucesso = false;
+
 // Tenta o login com um usuário e senha.
 async function tentarLogin(usuario, senha) {
     console.groupCollapsed(`%c[TENTATIVA] ${usuario}/${senha}`, 'color: DodgerBlue; font-weight: bold;'); // Inicia grupo recolhido
@@ -44,6 +47,7 @@ async function tentarLogin(usuario, senha) {
     form.submit();
 
     console.log("%c[INFO] ℹ️ Aguardando resposta do servidor...", 'color: SlateGray');
+    console.log('%c[ALERTA] 💡 Se você for redirecionado para outra página após esta mensagem, significa que o login foi bem-sucedido! ✅', 'color: DarkSeaGreen; font-weight: bold;');
     await new Promise(resolve => setTimeout(resolve, 2500)); // Aguarda (AJUSTAR O TEMPO).
 
     // Verifica se o login foi bem-sucedido (ADAPTAR A LÓGICA!).
@@ -52,6 +56,7 @@ async function tentarLogin(usuario, senha) {
     if (painelUsuario) {
         console.log(`%c[SUCESSO] ✅ Login com ${usuario}/${senha}`, 'color: green; font-weight: bold;'); // Login bem-sucedido!
         console.groupEnd(); // Finaliza grupo
+        loginSucesso = true;
         return true;
     } else {
         console.error(`%c[FALHA] ❌ Login com ${usuario}/${senha}`, 'color: red; font-weight: bold;'); // Login falhou!
