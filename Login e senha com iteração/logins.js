@@ -9,6 +9,18 @@ for (let i = 1; i <= 30; i++) {
     senhas.push(`yan${numFormatado}`);
 }
 
+// Variável para controlar a execução
+let pararExecucao = false;
+
+// Função para parar a execução
+function stop() {
+    pararExecucao = true;
+    console.warn('%cExecução interrompida pelo usuário.', 'color: orange;');
+}
+
+// Exponha a função stop no escopo global (window) para que possa ser chamada no console.
+window.stop = stop;
+
 // Tenta o login com um usuário e senha.
 async function tentarLogin(usuario, senha) {
     // Encontra os campos e o formulário (ADAPTAR OS SELECTORES!).
@@ -38,6 +50,11 @@ async function tentarLogin(usuario, senha) {
 // Executa os testes de login.
 async function executarTestes() {
     for (let i = 0; i < usuarios.length; i++) {
+        if (pararExecucao) {
+            console.log('%cExecução finalizada.', 'color: orange;');
+            return;
+        }
+
         const usuario = usuarios[i];
         const senha = senhas[i];
 
@@ -45,7 +62,7 @@ async function executarTestes() {
 
         if (await tentarLogin(usuario, senha)) return; // Para ao encontrar um login válido.
     }
-    console.error('%cFalha: Nenhuma combinação funcionou.', 'color: red;');
+    console.log('%cFalha: Nenhuma combinação funcionou.', 'color: red;');
 }
 
 executarTestes();
@@ -55,5 +72,4 @@ executarTestes();
 2. Adapte os seletores CSS em `tentarLogin()`.
 3. Adapte a lógica de sucesso em `tentarLogin()`.
 4. Ajuste o tempo de espera.
-5. Modifique a geração de usuários/senhas.
-*/
+5. Modifique a geração de usuários/senhas. */
