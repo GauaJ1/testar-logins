@@ -1,34 +1,92 @@
-# Script de Força Bruta para Recuperação de Conta (Console do Chrome)
 
-⚠️ **Atenção:** Este script destina-se *exclusivamente* à recuperação de *sua própria* conta em situações onde você perdeu ou esqueceu sua senha. **O uso para qualquer outra finalidade é ilegal e antiético.**
+# 🛡️ Script de Força Bruta para Recuperação de Conta (Console do Chrome)
+
+⚠️ **Aviso Legal:** Este script é destinado **exclusivamente** à recuperação de **contas pessoais** em casos de esquecimento de senha.  
+**Qualquer outro uso é ilegal, antiético e pode violar leis de segurança digital.**  
+Você é o único responsável pelo uso desta ferramenta.
 
 ---
 
-## 📌 Descrição
+## 📋 Descrição
 
-Este script JavaScript foi criado para ser executado no console do Chrome e realizar tentativas automatizadas de login em um formulário web. Ele percorre listas de usuários e senhas, preenchendo e submetendo o formulário para tentar acessar a conta.
+Este script JavaScript realiza tentativas automatizadas de login utilizando listas predefinidas de usuários e senhas.  
+Executado no console do navegador, ele simula o preenchimento do formulário de login e verifica se houve sucesso.
 
-> 🔒 **Importante:** Este é apenas um modelo e exige **adaptação** para funcionar em um site específico. A maioria dos sites modernos implementa mecanismos de segurança contra ataques de força bruta, como CAPTCHA, limites de tentativas e bloqueios de IP.
+---
+
+## 🧠 Funcionalidades
+
+✅ Geração automática de combinações (ex: `yan01` a `yan30`)  
+✅ Estilização no console com cores para facilitar a leitura  
+✅ Detecção de login bem-sucedido por presença de elemento (`#painel_usuario`)  
+✅ Alerta de sucesso em destaque  
+✅ Interrupção manual com `stop()`
+
+---
+
+## 🎨 Cores e Significados no Console
+
+| Cor              | Significado                         |
+|------------------|-------------------------------------|
+| 🔵 Azul Claro     | Tentativa de login iniciada         |
+| ⚙️ Azul Escuro     | Processo de tentativa               |
+| ⚪ Cinza          | Informações de preenchimento        |
+| 🟢 Verde          | Login bem-sucedido                  |
+| 🔴 Vermelho       | Login falhou / erro nos elementos   |
+| 🟠 Laranja        | Execução interrompida pelo usuário  |
+| 🟡 Dourado        | Início dos testes                   |
 
 ---
 
 ## ⚙️ Como Usar
 
-1. **Abra o DevTools do Chrome:**
-   - Vá até a página de login do site desejado.
-   - Pressione `F12` para abrir as ferramentas de desenvolvedor.
+### 1. Acesse o Console
 
-2. **Cole o código:**
-   - Acesse a aba **Console** e cole o código JavaScript fornecido.
+- Abra o navegador Chrome
+- Vá para a página de login do sistema desejado
+- Pressione `F12` e vá até a aba **Console**
 
-3. **Adapte o código (ESSENCIAL):**
-   - ✏️ **Listas `usuarios` e `senhas`:** Insira os valores que deseja testar.
-   - 🧩 **Seletores CSS:** Use o `document.querySelector()` para apontar corretamente para os campos de login e senha do formulário.
-   - ✅ **Verificação de sucesso:** Implemente uma lógica que reconheça quando o login foi bem-sucedido (ex: mudança de URL ou presença de um elemento específico).
-   - ⏱️ **Tempo de espera:** Ajuste o tempo entre tentativas para respeitar o tempo de resposta do servidor e evitar bloqueios.
+### 2. Cole o Script
 
-4. **Execute o código:**
-   - Pressione `Enter` no console para iniciar o script.
+- Copie e cole o código no console
+- Aguarde a execução
 
-5. **Monitore os resultados:**
-   - Acompanhe o console para ver os resultados das tentativas e identificar combinações válidas.
+### 3. Parar o Script
+
+- Para interromper, digite: `stop()` no console
+
+---
+
+## ✏️ Adaptação Necessária
+
+| O que               | Onde ajustar                                  | Exemplo atual             |
+|--------------------|-----------------------------------------------|---------------------------|
+| Lista de usuários  | `usuarios.push(...)` dentro do loop           | `yan01` a `yan30`         |
+| Lista de senhas    | `senhas.push(...)`                             | mesmas que usuários       |
+| Campos do formulário | `querySelector('input[name="login"]')`     | Ajustar para o site alvo  |
+| Lógica de sucesso  | `document.querySelector('#painel_usuario')`   | Mude se necessário        |
+| Tempo de espera    | `setTimeout` / `await` com delay              | 2500ms (ajustável)        |
+
+## 📎 Anexos
+
+📁 **Script Principal:**
+- [📥 script.js](./Login%20e%20senha%20com%20iteração/logins.js) — clique para abrir ou baixar o script principal.
+
+---
+
+## 🧪 Exemplo de Execução no Console
+
+```js
+// Parar a execução manualmente (a qualquer momento)
+stop()
+```
+
+---
+
+## 🛡️ Aviso Final
+
+Este script **não deve ser usado em contas que não sejam suas**.  
+Use **apenas para aprendizado ou recuperação legítima de conta** com permissão.  
+Respeite a ética e a legislação vigente.
+
+---

